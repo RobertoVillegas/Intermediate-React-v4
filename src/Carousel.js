@@ -21,7 +21,7 @@ export class Carousel extends Component {
     return (
       <div className="carousel">
         <img src={images[active]} alt="animal" />
-        <div className="carousel-smaller">
+        <div className="col-auto flex justify-between">
           {images.map((photo, index) => (
             //eslint-disable-next-line
             <img
@@ -29,7 +29,8 @@ export class Carousel extends Component {
               key={photo}
               src={photo}
               data-index={index}
-              className={index === active ? "active" : ""}
+              disabled={active == index}
+              className="h-24 rounded-full border-2 border-gray-600 disabled:opacity-50"
               alt="animal thumbnail"
             />
           ))}

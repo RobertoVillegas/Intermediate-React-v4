@@ -28,8 +28,9 @@ const SearchParams = () => {
   }
 
   return (
-    <div className="search-params">
+    <div className="my-0 mx-auto w-11/12">
       <form
+        className="mb-10 flex flex-col items-center justify-center rounded-lg bg-gray-200 p-10 shadow-lg"
         onSubmit={(e) => {
           e.preventDefault();
           requestPets();
@@ -39,9 +40,11 @@ const SearchParams = () => {
           Location
           <input
             id="location"
+            type="text"
             value={location}
             placeholder="location"
             onChange={(e) => setLocation(e.target.value)}
+            className="mb-5 block w-60"
           />
         </label>
         <label htmlFor="animal">
@@ -58,6 +61,7 @@ const SearchParams = () => {
               setAnimal(e.target.value);
               setBreed("");
             }}
+            className="mb-5 block w-60"
           >
             <option />
             {ANIMALS.map((animal) => (
@@ -70,6 +74,8 @@ const SearchParams = () => {
         <label htmlFor="breed">
           Breed
           <select
+            disabled={!breeds.length}
+            className="mb-5 block w-60 disabled:opacity-50"
             name="breed"
             id="breed"
             value={breed}
@@ -93,6 +99,7 @@ const SearchParams = () => {
           value={theme}
           onChange={(e) => setTheme(e.target.value)}
           onBlur={(e) => setTheme(e.target.value)}
+          className="mb-5 block w-60"
         >
           <option value="darkBlue">Dark Blue</option>
           <option value="red">Red</option>
@@ -101,7 +108,12 @@ const SearchParams = () => {
           <option value="chartreuse">Chartreuse</option>
           <option value="mediumorchid">Medium Orchid</option>
         </select>
-        <button style={{ backgroundColor: theme }}>Submit</button>
+        <button
+          className="rounded border-none px-6 py-2 text-white hover:opacity-50"
+          style={{ backgroundColor: theme }}
+        >
+          Submit
+        </button>
       </form>
       <Results pets={pets} />
     </div>

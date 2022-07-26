@@ -37,7 +37,7 @@ class Details extends Component {
       this.state;
 
     return (
-      <div className="details">
+      <div className="my-0  mx-auto w-10/12">
         <Carousel images={images} />
         <div>
           <h1>{name}</h1>
