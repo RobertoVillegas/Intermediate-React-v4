@@ -1,17 +1,25 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import useBreedList from "./useBreedList";
 import Results from "./Results";
-import ThemeContext from "./ThemeContext";
+import { useSelector, useDispatch } from "react-redux";
 
 const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
 
+import changeAnimal from "./actionCreators/changeAnimal";
+import changeBreed from "./actionCreators/changeBreed";
+import changeLocation from "./actionCreators/changeLocation";
+import changeTheme from "./actionCreators/changeTheme";
+
 const SearchParams = () => {
-  const [location, setLocation] = useState("");
-  const [animal, setAnimal] = useState("");
-  const [breed, setBreed] = useState("");
-  const [breeds] = useBreedList(animal);
+  const animal = useSelector((state) => state.animal);
+  const location = useSelector((state) => state.location);
+  const breed = useSelector(({ breed }) => breed);
+  const theme = useSelector((state) => state.theme);
+
+  const dispatch = useDispatch();
+
   const [pets, setPets] = useState([]);
-  const [theme, setTheme] = useContext(ThemeContext);
+  const [breeds] = useBreedList(animal);
 
   useEffect(() => {
     requestPets();
@@ -41,7 +49,7 @@ const SearchParams = () => {
             id="location"
             value={location}
             placeholder="location"
-            onChange={(e) => setLocation(e.target.value)}
+            onChange={(e) => dispatch(changeLocation(e.target.value))}
           />
         </label>
         <label htmlFor="animal">
@@ -51,12 +59,10 @@ const SearchParams = () => {
             id="animal"
             value={animal}
             onChange={(e) => {
-              setAnimal(e.target.value);
-              setBreed("");
+              dispatch(changeAnimal(e.target.value));
             }}
             onBlur={(e) => {
-              setAnimal(e.target.value);
-              setBreed("");
+              dispatch(changeAnimal(e.target.value));
             }}
           >
             <option />
@@ -74,10 +80,10 @@ const SearchParams = () => {
             id="breed"
             value={breed}
             onChange={(e) => {
-              setBreed(e.target.value);
+              dispatch(changeBreed(e.target.value));
             }}
             onBlur={(e) => {
-              setBreed(e.target.value);
+              dispatch(changeBreed(e.target.value));
             }}
           >
             <option />
@@ -91,8 +97,8 @@ const SearchParams = () => {
         <label htmlFor="theme">Theme</label>
         <select
           value={theme}
-          onChange={(e) => setTheme(e.target.value)}
-          onBlur={(e) => setTheme(e.target.value)}
+          onChange={(e) => dispatch(changeTheme(e.target.value))}
+          onBlur={(e) => dispatch(changeTheme(e.target.value))}
         >
           <option value="darkBlue">Dark Blue</option>
           <option value="red">Red</option>
