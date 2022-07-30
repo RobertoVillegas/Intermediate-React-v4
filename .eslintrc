@@ -5,16 +5,26 @@
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
     "plugin:react-hooks/recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "prettier"
   ],
   "rules": {
     "react/prop-types": "off",
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/no-empty-function": "off"
   },
-  "plugins": ["react", "import", "jsx-a11y", "react-hooks"],
+  "plugins": [
+    "react",
+    "import",
+    "jsx-a11y",
+    "react-hooks",
+    "@typescript-eslint"
+  ],
   "parserOptions": {
     "ecmaVersion": 2022,
     "sourceType": "module",
+    "project": ["./tsconfig.json"],
     "ecmaFeatures": {
       "jsx": true
     }
@@ -27,6 +37,14 @@
   "settings": {
     "react": {
       "version": "detect"
+    },
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
     }
   }
 }

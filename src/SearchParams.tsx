@@ -1,20 +1,21 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, FunctionComponent } from "react";
 import useBreedList from "./useBreedList";
 import Results from "./Results";
 import ThemeContext from "./ThemeContext";
+import { Animal, PetAPIResponse, Pet } from "./APIResponsesTypes";
 
-const ANIMALS = ["bird", "cat", "dog", "rabbit", "reptile"];
+const ANIMALS: Animal[] = ["bird", "cat", "dog", "rabbit", "reptile"];
 
-const SearchParams = () => {
+const SearchParams: FunctionComponent = () => {
   const [location, setLocation] = useState("");
-  const [animal, setAnimal] = useState("");
+  const [animal, setAnimal] = useState("" as Animal);
   const [breed, setBreed] = useState("");
+  const [pets, setPets] = useState([] as Pet[]);
   const [breeds] = useBreedList(animal);
-  const [pets, setPets] = useState([]);
   const [theme, setTheme] = useContext(ThemeContext);
 
   useEffect(() => {
-    requestPets();
+    void requestPets();
   }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
   async function requestPets() {
@@ -22,7 +23,7 @@ const SearchParams = () => {
       `http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`
     );
 
-    const json = await res.json();
+    const json = (await res.json()) as PetAPIResponse;
 
     setPets(json.pets);
   }
@@ -32,7 +33,7 @@ const SearchParams = () => {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          requestPets();
+          void requestPets();
         }}
       >
         <label htmlFor="location">
@@ -51,11 +52,11 @@ const SearchParams = () => {
             id="animal"
             value={animal}
             onChange={(e) => {
-              setAnimal(e.target.value);
+              setAnimal(e.target.value as Animal);
               setBreed("");
             }}
             onBlur={(e) => {
-              setAnimal(e.target.value);
+              setAnimal(e.target.value as Animal);
               setBreed("");
             }}
           >

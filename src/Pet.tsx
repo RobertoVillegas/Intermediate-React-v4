@@ -1,6 +1,19 @@
 import { Link } from "react-router-dom";
+import { FunctionComponent } from "react";
+import { Animal } from "./APIResponsesTypes";
 
-const Pet = ({ name, animal, breed, images, location, id }) => {
+interface Props {
+  name: string;
+  animal: Animal;
+  breed: string;
+  images: string[];
+  location: string;
+  id: number;
+}
+
+const Pet: FunctionComponent<Props> = (props) => {
+  const { name, animal, breed, images, location, id } = props;
+
   let hero = "http://pet-images.dev-apis.com/pets/none.jpg";
 
   if (images.length) {
@@ -21,13 +34,5 @@ const Pet = ({ name, animal, breed, images, location, id }) => {
     </Link>
   );
 };
-
-// const Pet = (props) => {
-//   return React.createElement("div", {}, [
-//     React.createElement("h1", {}, props.name),
-//     React.createElement("h2", {}, props.animal),
-//     React.createElement("h2", {}, props.breed),
-//   ]);
-// };
 
 export default Pet;
